@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResumeProof — Evidence-Based Candidate Discovery & Verification</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo-icon">🔍</div>
+                <div class="brand-text">
+                    <h1>ResumeProof</h1>
+                    <span class="tagline">Examine the evidence.</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-btn active" data-tab="recruiter-tab">
+                    <span class="icon">💼</span> Recruiter Dashboard
+                </button>
+                <button class="nav-btn" data-tab="candidate-tab">
+                    <span class="icon">👤</span> Candidate Profile
+                </button>
+                <button class="nav-btn" data-tab="discovery-tab">
+                    <span class="icon">🔎</span> Candidate Discovery
+                </button>
+            </nav>
+
+            <div class="system-badge">
+                <div class="badge-status"></div>
+                <span>Java SE 17 Single Source</span>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header Bar -->
+            <header class="top-header">
+                <div class="active-job-info">
+                    <span class="label">ACTIVE HIRING POSITION</span>
+                    <h2 id="header-job-title">Software Engineer</h2>
+                    <span id="header-job-meta" style="font-size: 12px; color: var(--text-secondary);">Acme Corp | General Industry</span>
+                </div>
+
+                <div class="header-actions">
+                    <div class="mode-selector">
+                        <span class="selector-label">EVALUATION MODE:</span>
+                        <div class="mode-pills">
+                            <button class="mode-pill" data-mode="STRICT">🔒 STRICT</button>
+                            <button class="mode-pill active" data-mode="BALANCED">⚖️ BALANCED</button>
+                            <button class="mode-pill" data-mode="BEST_MATCH">🌟 BEST MATCH</button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- TAB 1: Recruiter / Company Dashboard -->
+            <section id="recruiter-tab" class="tab-content active">
+                <!-- Mode Description Banner -->
+                <div class="mode-banner" id="mode-banner">
+                    <div class="banner-icon">⚖️</div>
+                    <div class="banner-text">
+                        <strong id="mode-title">Balanced Mode Active</strong>
+                        <p id="mode-desc">Mandatory requirements act as primary filters. Preferred criteria, requirement importance, and evidence strength drive candidate ranking.</p>
+                    </div>
+                </div>
+
+                <!-- Recruiter Job Creator & Domain Switcher -->
+                <div class="card job-builder-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+                        <h3>Company Job Requirement Builder</h3>
+                        <div class="template-selector">
+                            <label style="font-size: 12px; color: var(--text-secondary); margin-right: 8px;">Load Domain Template:</label>
+                            <select id="sample-job-select" class="form-select" style="padding: 6px 12px; font-size: 12px;"></select>
+                        </div>
+                    </div>
+
+                    <form id="form-create-job" class="job-form-grid">
+                        <div>
+                            <label class="form-label">Position Title:</label>
+                            <input type="text" id="job-input-title" class="form-control" placeholder="e.g. Software Engineer, Marketing Executive, Financial Analyst, Mechanical Engineer..." required />
+                        </div>
+                        <div>
+                            <label class="form-label">Company Name:</label>
+                            <input type="text" id="job-input-company" class="form-control" placeholder="e.g. Horizon Green Energy" required />
+                        </div>
+                        <div>
+                            <label class="form-label">Industry Domain:</label>
+                            <input type="text" id="job-input-domain" class="form-control" placeholder="e.g. Technology, Finance, Renewable Energy, Healthcare..." required />
+                        </div>
+
+                        <div style="grid-column: span 3;">
+                            <label class="form-label">Mandatory Requirements (Hard Filters in Strict Mode, comma/line separated):</label>
+                            <input type="text" id="job-input-mandatory" class="form-control" placeholder="e.g. Java, SQL, Data Structures OR AutoCAD, SolidWorks OR Photovoltaic System Design, Grid Integration" required />
+                        </div>
+
+                        <div style="grid-column: span 3;">
+                            <label class="form-label">Preferred Requirements (Ranking Drivers, comma/line separated):</label>
+                            <input type="text" id="job-input-preferred" class="form-control" placeholder="e.g. Git, Docker, Microservices OR Finite Element Analysis, PVSyst, Energy Storage" />
+                        </div>
+
+                        <div style="grid-column: span 3; text-align: right; margin-top: 8px;">
+                            <button type="submit" class="btn-primary">Update Job Requirements & Evaluate Candidate Pool</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Active Criteria Breakdown -->
+                <div class="jd-summary-grid">
+                    <div class="card jd-card">
+                        <h3>Mandatory Criteria</h3>
+                        <div id="mandatory-tags" class="tag-cloud"></div>
+                    </div>
+                    <div class="card jd-card">
+                        <h3>Preferred Criteria</h3>
+                        <div id="preferred-tags" class="tag-cloud"></div>
+                    </div>
+                </div>
+
+                <!-- Ranked Candidates Table -->
+                <div class="card table-card">
+                    <div class="table-header">
+                        <h3>Ranked Candidates (Evaluated by Java SE 17 Core Engine)</h3>
+                        <span class="table-subtitle">Click any candidate row to examine evidence and interview questions</span>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Candidate Name</th>
+                                    <th>Status</th>
+                                    <th>Qualification Score</th>
+                                    <th>Opportunity Alignment</th>
+                                    <th>Strong Evidence</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="candidates-tbody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: Candidate / Job Seeker Dashboard -->
+            <section id="candidate-tab" class="tab-content">
+                <div class="card profile-card">
+                    <h2>Job Seeker Profile & Resume Upload</h2>
+                    <p class="search-subtitle">Create or update your candidate profile. Enter any profession or role to join the searchable candidate pool.</p>
+
+                    <!-- Profile Completeness Bar -->
+                    <div class="completeness-container" style="margin-bottom: 24px; background: rgba(255,255,255,0.03); padding: 16px; border-radius: 10px; border: 1px solid var(--border-color);">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px;">
+                            <span style="color: var(--text-secondary); font-weight: 600;">PROFILE COMPLETENESS</span>
+                            <span id="completeness-percentage" style="color: var(--accent-color); font-weight: 700;">0%</span>
+                        </div>
+                        <div class="progress-bar-bg" style="width: 100%; height: 8px; background: var(--border-color); border-radius: 4px; overflow: hidden;">
+                            <div id="completeness-fill" style="width: 0%; height: 100%; background: linear-gradient(90deg, #3b82f6, #10b981); transition: width 0.4s ease;"></div>
+                        </div>
+                    </div>
+
+                    <form id="form-create-candidate" class="candidate-form-grid" style="margin-bottom: 28px;">
+                        <div>
+                            <label class="form-label">Full Name:</label>
+                            <input type="text" id="cand-input-name" class="form-control" placeholder="e.g. Ananya Mehta" required />
+                        </div>
+                        <div>
+                            <label class="form-label">Email Address:</label>
+                            <input type="email" id="cand-input-email" class="form-control" placeholder="ananya@example.com" required />
+                        </div>
+                        <div>
+                            <label class="form-label">Phone Number:</label>
+                            <input type="text" id="cand-input-phone" class="form-control" placeholder="+91 9876543210" />
+                        </div>
+
+                        <div>
+                            <label class="form-label">Dream Companies (comma separated):</label>
+                            <input type="text" id="cand-input-dream" class="form-control" placeholder="e.g. Horizon Green Energy, Siemens, Tesla" />
+                        </div>
+                        <div>
+                            <label class="form-label">Preferred Job Roles (comma separated):</label>
+                            <input type="text" id="cand-input-roles" class="form-control" placeholder="e.g. Renewable Energy Systems Engineer, Mechanical Engineer" />
+                        </div>
+                        <div>
+                            <label class="form-label">Preferred Domains (comma separated):</label>
+                            <input type="text" id="cand-input-domains" class="form-control" placeholder="e.g. Renewable Energy, Mechanical Engineering" />
+                        </div>
+
+                        <div style="grid-column: span 3;">
+                            <label class="form-label">Resume Content / Text (Skills, Education, Projects, Experience):</label>
+                            <textarea id="cand-input-resume" class="form-control" rows="6" placeholder="Paste your complete resume text here (Skills, Experience, Projects, Education)..." required></textarea>
+                        </div>
+
+                        <div style="grid-column: span 3; text-align: right;">
+                            <button type="submit" class="btn-primary">Submit Profile & Enter Candidate Pool</button>
+                        </div>
+                    </form>
+
+                    <div style="border-top: 1px solid var(--border-color); padding-top: 20px;">
+                        <h3>Active Candidate Pool Profiles</h3>
+                        <div class="candidate-select-group" style="margin-top: 12px;">
+                            <label>Select Candidate Profile to Inspect:</label>
+                            <select id="candidate-picker" class="form-select"></select>
+                        </div>
+
+                        <div id="candidate-profile-view" class="profile-details-grid" style="margin-top: 16px;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: Candidate Discovery -->
+            <section id="discovery-tab" class="tab-content">
+                <div class="card search-card">
+                    <h2>Multi-Criteria Candidate Discovery</h2>
+                    <p class="search-subtitle">Search candidate resumes across all domains by skills, projects, or custom keywords.</p>
+
+                    <div class="search-bar-group">
+                        <input type="text" id="discovery-search-input" placeholder="e.g. Java, Financial Modeling, SolidWorks, Solar PV, SEO, Python..." />
+                        <button id="btn-search-discovery" class="btn-primary">Search Candidate Pool</button>
+                    </div>
+
+                    <div style="margin-top: 12px; font-size: 12px; color: var(--text-secondary);">
+                        <span>Quick Filter Domains: </span>
+                        <button class="btn-chip" data-query="Java">Technology</button>
+                        <button class="btn-chip" data-query="SEO">Marketing</button>
+                        <button class="btn-chip" data-query="Financial Modeling">Finance</button>
+                        <button class="btn-chip" data-query="SolidWorks">Mechanical</button>
+                        <button class="btn-chip" data-query="Solar">Renewable Energy</button>
+                    </div>
+                </div>
+
+                <div id="discovery-results" class="discovery-grid"></div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Candidate Evidence Detail Modal -->
+    <div id="evidence-modal" class="modal-overlay">
+        <div class="modal-content card">
+            <div class="modal-header">
+                <div>
+                    <h2 id="modal-candidate-name">Candidate Name</h2>
+                    <span id="modal-candidate-meta" class="modal-meta">Candidate ID</span>
+                </div>
+                <button class="modal-close" id="btn-close-modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <!-- Summary Metrics -->
+                <div class="modal-metrics-grid">
+                    <div class="metric-box">
+                        <span class="metric-label">QUALIFICATION SCORE</span>
+                        <div id="modal-score" class="metric-value">94%</div>
+                    </div>
+                    <div class="metric-box">
+                        <span class="metric-label">SHORTLIST STATUS</span>
+                        <div id="modal-status" class="metric-value">Shortlisted</div>
+                    </div>
+                    <div class="metric-box">
+                        <span class="metric-label">OPPORTUNITY ALIGNMENT</span>
+                        <div id="modal-alignment" class="metric-value">HIGH</div>
+                    </div>
+                </div>
+
+                <!-- Explanation Box -->
+                <div class="explanation-box">
+                    <h4>Why this candidate received their ranking:</h4>
+                    <p id="modal-explanation-text"></p>
+                </div>
+
+                <!-- Evidence Matrix -->
+                <div class="modal-section">
+                    <h3>Requirement Evidence Analysis</h3>
+                    <div class="table-container">
+                        <table class="data-table evidence-table">
+                            <thead>
+                                <tr>
+                                    <th>Requirement</th>
+                                    <th>Status / Strength</th>
+                                    <th>Evidence Snippet Proof</th>
+                                    <th>Source Section</th>
+                                </tr>
+                            </thead>
+                            <tbody id="modal-evidence-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Skill Gaps & Strengths -->
+                <div class="modal-section grid-2col">
+                    <div class="sub-card">
+                        <h4>Strong Areas & Key Strengths</h4>
+                        <ul id="modal-strong-list" class="badge-list"></ul>
+                    </div>
+                    <div class="sub-card">
+                        <h4>Missing Requirements & Gaps</h4>
+                        <ul id="modal-missing-list" class="badge-list alert-list"></ul>
+                    </div>
+                </div>
+
+                <!-- Claim Verification -->
+                <div class="modal-section">
+                    <h3>Accomplishment Claim Verification</h3>
+                    <div id="modal-claims-container" class="claims-list"></div>
+                </div>
+
+                <!-- Suggested Interview Questions -->
+                <div class="modal-section">
+                    <h3>Targeted Technical & Domain Interview Questions (Rule-Generated)</h3>
+                    <div id="modal-questions-container" class="questions-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
